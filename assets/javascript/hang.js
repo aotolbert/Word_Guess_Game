@@ -43,7 +43,7 @@ pullname ();
         var displayboxes = document.getElementById("guessareafirst");
             for (i=0; i<guessedname.length; i++) {
                 spacer = document.createElement("div");
-                spacer.setAttribute("class", "mr-2 border-bottom border-dark w-5 p-3 invisible");
+                spacer.setAttribute("class", "mr-2 border-bottom border-dark w-5 p-3 text-hide uline");
                 spacer.setAttribute("id", "letterbox" + i);
                 spacer.textContent = guessedname[i];
                 displayboxes.appendChild(spacer)
@@ -102,7 +102,7 @@ document.onkeyup = function(event) {
         // console.log(letter);
 
         if (userguess == letter) {
-            document.getElementById(("letterbox" + j)).setAttribute("class", "mr-3 border-bottom border-dark w-8 p-3 visible uline");
+            document.getElementById(("letterbox" + j)).setAttribute("class", "mr-3 border-bottom border-dark w-8 p-3 uline");
             goodguess = true;
             alert("Good Guess!")
 
@@ -135,12 +135,22 @@ document.onkeyup = function(event) {
 
     }
 
-    guessedbox = document.getElementsByClassName("invisible");
+    guessedbox = document.getElementsByClassName("text-hide");
 
     console.log(guessedbox);
 
     if (guessedbox.length === 0) {
         alert("Congratulations you really know your football! Hit Refresh to start over!")
+        // holdletter;
+        // storedguess = "";
+        // guesscounter = 8;
+        // guessedname = [];
+        // spacer;
+        // goodguess = false;
+        // pullname();
+        // displayname();
+        // displayfacts();
+
     }
     
 
