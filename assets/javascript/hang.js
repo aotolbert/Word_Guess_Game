@@ -14,6 +14,10 @@ var goodguess = false;
 
 var guesscounter = 8;
 
+var guessedbox;
+
+var storedguess = "";
+
 
     function pullname() {
         var randomnumber = Math.floor(Math.random() * firstname.length);
@@ -39,7 +43,7 @@ pullname ();
         var displayboxes = document.getElementById("guessareafirst");
             for (i=0; i<guessedname.length; i++) {
                 spacer = document.createElement("div");
-                spacer.setAttribute("class", "mr-3 border-bottom border-dark w-8 p-3 invisible");
+                spacer.setAttribute("class", "mr-2 border-bottom border-dark w-5 p-3 invisible");
                 spacer.setAttribute("id", "letterbox" + i);
                 spacer.textContent = guessedname[i];
                 displayboxes.appendChild(spacer)
@@ -49,6 +53,27 @@ pullname ();
     }
 
 displayname();
+
+    function displayfacts() {
+        var html =
+
+        "<h3>Guesses left: " + guesscounter + "</h3>" +
+        "<h3>Previous Guesses: " + storedguess + "</h3>" +
+        "<h3> First Name Length: " + firstpull.length + "</h3>" +
+        "<h3> Last Name Length: " + lastpull.length + "</h3>"
+        ;
+    
+        
+    
+    
+        // Set the inner HTML contents of the #game div to our html string
+        document.querySelector("#guesscounter").innerHTML = html;
+    
+
+
+    }
+
+displayfacts();
 
 
 
@@ -77,8 +102,9 @@ document.onkeyup = function(event) {
         // console.log(letter);
 
         if (userguess == letter) {
-            document.getElementById(("letterbox" + j)).setAttribute("class", "bg-danger mr-3 border-bottom border-dark w-8 p-3 visible");
+            document.getElementById(("letterbox" + j)).setAttribute("class", "mr-3 border-bottom border-dark w-8 p-3 visible uline");
             goodguess = true;
+            alert("Good Guess!")
 
         }
 
@@ -88,9 +114,10 @@ document.onkeyup = function(event) {
 
 
     if (goodguess === false) {
-        alert("Bad Guess!");
+        alert("Bad Guess :(");
         guesscounter--;
         document.getElementById("image").setAttribute("src", "assets/images/Hangman_" + (8-guesscounter) + ".png");
+        storedguess = storedguess + event.key + ", ";
 
 
 
@@ -99,7 +126,7 @@ document.onkeyup = function(event) {
     console.log(guesscounter)
 
     if (guesscounter === 0) {
-        alert("You lose! You mean that you've never hear of " + guessedname + " before?")
+        alert("You lose! You mean that you've never hear of " + firstpull + " " + lastpull + " before?? Hit Refresh to try again!")
         pullname ();
         displayname();
         guesscounter = 8;
@@ -107,14 +134,20 @@ document.onkeyup = function(event) {
 
 
     }
+
+    guessedbox = document.getElementsByClassName("invisible");
+
+    console.log(guessedbox);
+
+    if (guessedbox.length === 0) {
+        alert("Congratulations you really know your football! Hit Refresh to start over!")
+    }
     
-    var html =
-
-    "<h2>Guesses left: " + guesscounter + "</h2>";
 
 
-    // Set the inner HTML contents of the #game div to our html string
-    document.querySelector("#guesscounter").innerHTML = html;
+    displayfacts();
+
+
 
 
         
