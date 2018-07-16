@@ -6,164 +6,121 @@ var firstpull;
 
 var lastpull;
 
-var holdWord;
+var guessedname = [];
 
-var answer;
+var spacer;
 
-var first = "";
+var goodguess = false;
 
-var firstnameletters = [];
-
-var lastnameletters = [];
+var guesscounter = 8;
 
 
-// var answer = firstpull + lastpull;
-
-function pullName() {
-
-var randomnumber = Math.floor(Math.random() * firstname.length);
-console.log(randomnumber);
+    function pullname() {
+        var randomnumber = Math.floor(Math.random() * firstname.length);
+        console.log(randomnumber);
 
 
-firstpull = firstname[Math.floor(randomnumber)];
-console.log(firstpull);
-
-lastpull = lastname[Math.floor(randomnumber)];
-console.log(lastpull);
+        firstpull = firstname[Math.floor(randomnumber)];
+        console.log(firstpull);
 
 
-    // function displayname() {
-    //   var pull = document.getElementById("guessareahidden");
-    //   var addName = document.createElement("h2");
-    //     addName.textContent = firstname[randomnumber] + " " + lastname[randomnumber];
-    //     pull.appendChild(addName);
-    
+        lastpull = lastname[Math.floor(randomnumber)];
+        console.log(lastpull);
 
+        guessedname = firstpull.toLowerCase() + " " + lastpull.toLowerCase();
 
+        console.log(guessedname);
 
-    // answer = firstpull + lastpull;
-    // var uniformanswer = answer.toLowerCase();
-    // console.log(uniformanswer);
+    }   
 
-    // console.log(uniformanswer.length);
+pullname ();
 
- 
-   
-    // }
-    
-    // displayname();
+    function displayname() {
+        var displayboxes = document.getElementById("guessareafirst");
+            for (i=0; i<guessedname.length; i++) {
+                spacer = document.createElement("div");
+                spacer.setAttribute("class", "mr-3 border-bottom border-dark w-8 p-3 invisible");
+                spacer.setAttribute("id", "letterbox" + i);
+                spacer.textContent = guessedname[i];
+                displayboxes.appendChild(spacer)
+                }
+      
 
-    function hidefirstname () {
-        var hidefirst = document.getElementById("guessareafirst");
-        for (i=0; i<firstpull.length; i++) {
-            var space = document.createElement("h1")
-            space.textContent = "_";
-            hidefirst.appendChild(space)
-            }
     }
 
-    // holdWord[firstpull].replace(holdWord[firstpull], "_");
-    hidefirstname();
+displayname();
 
-        function hidelastname () {
-            
-        var hidelast = document.getElementById("guessarealast");
-        for (i=0; i<lastpull.length; i++) {
-            var spacer = document.createElement("h1")
-            spacer.textContent = "_";
-            hidelast.appendChild(spacer)
-            }
-
-
-        }
-    hidelastname();
-
-    
-       function storename () {
-           var answer = firstpull + lastpull;
-            var uniformfirst = firstpull.toLowerCase();
-            var uniformlast = lastpull.toLowerCase();
-            console.log(uniformanswer);
-            // console.log(uniformanswer.length);
-            // console.log(firstpull);
-            // console.log(lastpull);
-
-            firstnameletters = uniformfirst.split("");
-
-            lastnameletters = uniformlast.split("");
-
-       }
-
-
-       storename();
-
-       console.log(firstnameletters);
-       console.log(lastnameletters);
-}
-
-pullName();
-
-var answer = firstpull + lastpull;
-var uniformanswer = answer.toLowerCase();
-console.log(uniformanswer);
-
-console.log(uniformanswer.length);
-
-
-// for (i=0; i<uniformanswer.length; i++)
-// var space = document.createElement("h1")
-// space.textContent = "_";
-
-
-// document.onkeyup = function(event) {
-
-//     var userGuess = event.key;
-    
-//     if (userGuess !== computerGuess) {
-//         alert ("Try again");
-//         guessCounter --;
-//         guessTracker = guessTracker + event.key + ", ";
-        
-
-//     }
-
-//    else if (userGuess === computerGuess) {
-//         alert ("Congratulations");
-//         winCounter ++;
-//         guessCounter = 10;
-//         guessTracker = [];
-//         random();
-        
-
-//     }
-
-//     if (guessCounter === 0) {
-//         alert ("You lose. Sorry buddy");
-//         lossCounter ++;
-//         guessCounter = 10;
-//         guessTracker = [];
-//         random();
-//     }
 
 
 document.onkeyup = function(event) {
 
     var userguess = event.key;
-    
     console.log(userguess);
 
-    if (userguess !== [firstnameletters]) {
-        alert ("Bad Guess");
+    
+    for (j=0; j<guessedname.length; j++) {
+        var holdletter = document.getElementById("letterbox" + j);
+        var letter = holdletter.innerHTML;
+        // console.log(holdletter);
+        // console.log(letter);
+
+        if (userguess !== letter) {
+            goodguess = false;
+        }
     }
 
 
-    else {
-        alert ("Good Guess!");
+    for (j=0; j<guessedname.length; j++) {
+        var holdletter = document.getElementById("letterbox" + j);
+        var letter = holdletter.innerHTML;
+        // console.log(holdletter);
+        // console.log(letter);
+
+        if (userguess == letter) {
+            document.getElementById(("letterbox" + j)).setAttribute("class", "bg-danger mr-3 border-bottom border-dark w-8 p-3 visible");
+            goodguess = true;
+
+        }
+
     }
 
+    console.log(goodguess);
+
+
+    if (goodguess === false) {
+        alert("Bad Guess!");
+        guesscounter--;
+        document.getElementById("image").setAttribute("src", "assets/images/Hangman_" + (8-guesscounter) + ".png");
 
 
 
+    }
 
+    console.log(guesscounter)
+
+    if (guesscounter === 0) {
+        alert("You lose! You mean that you've never hear of " + guessedname + " before?")
+        pullname ();
+        displayname();
+        guesscounter = 8;
+        document.getElementById("image").setAttribute("src", "assets/images/Hangman_" + (8-guesscounter) + ".png");
+
+
+    }
+    
+    var html =
+
+    "<h2>Guesses left: " + guesscounter + "</h2>";
+
+
+    // Set the inner HTML contents of the #game div to our html string
+    document.querySelector("#guesscounter").innerHTML = html;
+
+
+        
 
 }
+
+
+
+
