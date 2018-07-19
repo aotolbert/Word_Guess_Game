@@ -55,7 +55,7 @@ pullname ();
 displayname();
 
     function displayfacts() {
-        var html =
+        var facts =
 
         "<h3>Guesses left: " + guesscounter + "</h3>" +
         "<h3>Previous Guesses: " + storedguess + "</h3>" +
@@ -67,7 +67,7 @@ displayname();
     
     
         // Set the inner HTML contents of the #game div to our html string
-        document.querySelector("#guesscounter").innerHTML = html;
+        document.querySelector("#guesscounter").innerHTML = facts;
     
 
 
